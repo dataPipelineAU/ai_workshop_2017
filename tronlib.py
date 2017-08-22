@@ -1,6 +1,6 @@
 
 # coding: utf-8
-
+import neat
 
 import numpy as np
 
@@ -135,7 +135,16 @@ class SimpleBot:
             return None
         
 
-
+class NNBot:
+    
+    def __init__(self, genome, config):
+        self.net = neat.nn.FeedForwardNetwork.create(genome, config)
+    
+    def decide_move(self, board, player_position):
+        move_choice = np.argmax(self.net.activate(board.board.flatten()))
+        return TronBoard.VALID_VECTORS[move_choice]
+    
+    
 # In[6]:
 
 from matplotlib import animation, rc
